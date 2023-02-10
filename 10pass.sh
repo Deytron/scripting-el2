@@ -27,8 +27,6 @@ echo '  .   *   ..  . *  *
     \_________/
 '
 
-#Function to generate a random password, 10 characters long
-
 echo '10Pass'
 echo ''
 echo 'The best password generator in the west. But only with 10 characters.'
@@ -46,26 +44,29 @@ function input {
 
 input
 
+# Function to generate a random password, 10 characters long
+
 function generate_pass {
     # One obvious thing I could do is using OpenSSL :P
     # But let's make it the old way
     for i in {1..10}; do
         type=$(( $RANDOM % 3 ))
-        if [[ type == 1 ]]; then
-            i=$RANDOM | md5sum | head -c 1; echo;
+        if [[ $type == 0 ]]; then
+            i=$(echo $RANDOM | md5sum | head -c 1 )
+            echo
         fi
-        if [[ type == 2 ]]; then
+        if [[ $type == 1 ]]; then
             i=$(( $RANDOM % 9 ))
         fi
-        if [[ type == 3 ]]; then
+        if [[ $type == 2 ]]; then
             i=$(echo "_-+=)({@}" | sed 's/./&\n/g' | grep . | shuf | head -1)
         fi
-    TAB+="${i}"
+    TAB+=$i
     done
     echo $TAB
 }
 
-if [[ $CHOICE == ^[yY]$ ]]; then
+if [[ $CHOICE == "y" || "Y" ]]; then
     echo 'Alright. Here is your password :'
     echo ''
     generate_pass
