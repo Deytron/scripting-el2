@@ -38,6 +38,7 @@ function showmenu {
     echo '1. Give me the month'
     echo '2. 10Pass'
     echo '3. FileLight'
+    echo '4. Bigbrain calculator'
     echo '0. Exit'
 
     read -p 'Enter your choice here : ' CHOICE
@@ -72,6 +73,9 @@ if [[ $CHOICE == 2 ]]; then
 fi
 if [[ $CHOICE == 3 ]]; then
     ./10pass.sh
+fi
+if [[ $CHOICE == 3 ]]; then
+    ./bigbrain.sh
 fi
 
 wait $!
