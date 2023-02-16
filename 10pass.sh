@@ -10,7 +10,7 @@
 
 ### Variables
 TAB=""
-CHOICE=""
+YES=""
 
 echo '  .   *   ..  . *  *
 *  * @()Ooc()*   o  .
@@ -32,13 +32,13 @@ echo ''
 echo 'The best password generator in the west. But only with 10 characters.'
 sleep 2
 echo ''
-read -p 'Should I generate a password for you ? [y/n] : ' CHOICE
+read -p 'Should I generate a password for you ? [y/n] : ' YES
 
 function input {
-    while [[ ! $CHOICE =~ ^[yYnN]$ ]]; do
+    while [[ ! $YES =~ ^[yYnN]$ ]]; do
         echo ''
         echo "I don't know what you are trying to do"
-        read -p 'Should I generate a password for you ? [y/n] : ' CHOICE
+        read -p 'Should I generate a password for you ? [y/n] : ' YES
     done
 }
 
@@ -66,7 +66,7 @@ function generate_pass {
     echo $TAB
 }
 
-if [[ $CHOICE == "y" || "Y" ]]; then
+if [[ $YES == "y" || "Y" ]]; then
     echo 'Alright. Here is your password :'
     echo ''
     generate_pass

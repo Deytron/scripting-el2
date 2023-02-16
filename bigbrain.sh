@@ -70,6 +70,7 @@ function wronginput {
     return 1
 }
 
+readinput
 checkinput
 
 while [[ $? -ne 0 ]]; do
@@ -78,7 +79,7 @@ while [[ $? -ne 0 ]]; do
 done
 
 # Calculus boy
-echo 'The result is ' $(($NUM1 $operand $NUM2))
+echo 'The result is ' $(($NUM1 $OP $NUM2))
 echo ''
 echo 'See you later, sympathetic boy !'
 

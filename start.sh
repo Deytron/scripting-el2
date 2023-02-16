@@ -11,11 +11,51 @@
 
 ### Variables
 CHOICE=0
-# A=('Give me the month')
 
 chmod +x *
 
-echo '    /\_____/\
+function checkinput {
+    sleep 1
+
+    if [[ $CHOICE == 1 ]]; then
+        ./givemethemonth.sh
+    fi
+    if [[ $CHOICE == 2 ]]; then
+        ./10pass.sh
+    fi
+    if [[ $CHOICE == 3 ]]; then
+        ./filelight.sh
+    fi
+    if [[ $CHOICE == 4 ]]; then
+        ./bigbrain.sh
+    fi
+
+    wait $job_pid
+    next
+}
+
+function readinput {
+    # Exit on 0
+    if [[ $CHOICE == 0 ]]; then
+        echo 'See you later !'
+        exit 0
+    fi
+
+    while [[ ! $CHOICE =~ ^([0-9]|10)$ ]]; do
+        echo ''
+        echo "Well, that's not a valid number"
+        read -p 'Enter your choice here : ' CHOICE
+    done
+
+    echo 'Choice number' $CHOICE 'huh ? Excellent choice.'
+    echo 'Here you go then.'
+    echo ''
+
+    checkinput
+}
+
+function showmenu {
+    echo '    /\_____/\
    /  o   o  \
   ( ==  ^  == )
    )         (
@@ -24,7 +64,6 @@ echo '    /\_____/\
 (__(__)___(__)__)'
 
 
-function showmenu {
     echo ''
     echo 'Hello ! Please select an activity below'
     echo ''
@@ -42,47 +81,19 @@ function showmenu {
     echo '0. Exit'
 
     read -p 'Enter your choice here : ' CHOICE
+    readinput
 }
 
-showmenu
-
-# Exit on 0
-if [[ $CHOICE == 0 ]]; then
-    echo 'See you later !'
-    exit 0
-fi
-
-while [[ ! $CHOICE =~ ^([0-9]|10)$ ]]; do
+function next {
     echo ''
-    echo "Well, that's not a valid number"
-    read -p 'Enter your choice here : ' CHOICE
+    echo '----------------------------'
+    echo ''
+    echo 'Looks like your activity is done.'
+    read -p 'Press enter to continue' NULL
+    sleep 1
+}
+
+while true; do
+    clear
+    showmenu
 done
-
-echo 'Choice number' $CHOICE 'huh ? Excellent choice.'
-echo 'Here you go then.'
-echo ''
-
-
-sleep 1
-
-if [[ $CHOICE == 1 ]]; then
-    ./givemethemonth.sh
-fi
-if [[ $CHOICE == 2 ]]; then
-    ./10pass.sh
-fi
-if [[ $CHOICE == 3 ]]; then
-    ./10pass.sh
-fi
-if [[ $CHOICE == 3 ]]; then
-    ./bigbrain.sh
-fi
-
-wait $!
-
-echo ''
-echo 'Looks like your activity is done.'
-read -p 'Press enter to continue' NULL
-sleep 1
-clear
-showmenu
