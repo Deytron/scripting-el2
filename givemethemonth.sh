@@ -1,7 +1,7 @@
 #!/bin/bash
 # Give me the month !
 # Made by Romain Ranaivoson
-# Last update: 2023-02-10
+# Last update: 2023-02-16
 # -------------------------------------------
 # To use this script, either run ./start.sh before
 # or run ./givemethemonth.sh with an argument

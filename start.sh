@@ -1,7 +1,7 @@
 #!/bin/bash
 # Start menu for scripts
 # Made by Romain Ranaivoson
-# Last update: 2023-02-10
+# Last update: 2023-02-16
 # -------------------------------------------
 # To use this script, simply run it from the command line with your folder
 # Example : ./start.sh
@@ -28,6 +28,9 @@ function checkinput {
     fi
     if [[ $CHOICE == 4 ]]; then
         ./bigbrain.sh
+    fi
+    if [[ $CHOICE == 5 ]]; then
+        ./givemetheip.sh
     fi
 
     wait $job_pid
