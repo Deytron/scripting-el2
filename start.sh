@@ -32,6 +32,9 @@ function checkinput {
     if [[ $CHOICE == 5 ]]; then
         ./givemetheip.sh
     fi
+    if [[ $CHOICE == 6 ]]; then
+        ./bigdb.sh
+    fi
 
     wait $job_pid
     next
@@ -81,6 +84,8 @@ function showmenu {
     echo '2. 10Pass'
     echo '3. FileLight'
     echo '4. Bigbrain calculator'
+    echo '5. Give me the IP'
+    echo '6. BigDB system'
     echo '0. Exit'
 
     read -p 'Enter your choice here : ' CHOICE
