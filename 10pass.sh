@@ -4,7 +4,7 @@
 # Last update: 2023-02-17
 # -------------------------------------------
 # To use this script, either run ./start.sh before
-# or run ./10pass.sh with an argument
+# or run ./10pass.sh
 # No Windows here sorry boy
 # -------------------------------------------
 

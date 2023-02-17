@@ -4,7 +4,7 @@
 # Last update: 2023-02-16
 # -------------------------------------------
 # To use this script, either run ./start.sh before
-# or run ./givemetheip.sh with an argument
+# or run ./givemetheip.sh
 # No Windows here sorry boy
 # -------------------------------------------
 

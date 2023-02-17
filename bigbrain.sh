@@ -4,7 +4,7 @@
 # Last update: 2023-02-10
 # -------------------------------------------
 # To use this script, either run ./start.sh before
-# or run ./bigbrain.sh with an argument
+# or run ./bigbrain.sh
 # No Windows here sorry boy
 # -------------------------------------------
 
