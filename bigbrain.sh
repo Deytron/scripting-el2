@@ -32,6 +32,7 @@ echo "Oh yeah, it's big brain time !"
 echo ''
 
 function readinput {
+    echo ''
     read -p 'Give me your first number : ' NUM1
     read -p 'Give me your operand : ' OP
     read -p 'Give me your second number : ' NUM2
@@ -39,35 +40,32 @@ function readinput {
 
 
 function checkinput {
+    echo ''
     # Check if the first input is a whole number
     if ! [[ $NUM1 =~ ^[0-9]+$ ]]; then
-        echo ''
         echo "Damn, I need a whole number, anything else won't work."
         return 1
     fi
 
     # Check if the operand is valid
-    if [[ ! $OP =~ ^[\+\-\*\/]$ ]]; then
-        echo ''
+    if [[ ! $OP =~ ^[+*/-]$ ]]; then
         echo "Wrong operand. I accept only +, -, *, and / my man."
         return 1
     fi
 
     # Check if the second input is a whole number
     if ! [[ $NUM2 =~ ^[0-9]+$ ]]; then
-        echo ''
         echo "Damn, I need a whole number, anything else won't work."
         return 1
     fi
 
-    return 0
-}
+    # Check for division by zero
+    if [[ $OP == '/' ]] && [[ $NUM2 == 0 ]]; then
+        echo "WOWOWOWO hold on. You can't divide by zero !"
+        return 1
+    fi
 
-function wronginput {
-    echo ''
-    echo 'Ahoy mate, there was something wrong in everything you gave me. Try again.'
-    echo ''
-    return 1
+    return 0
 }
 
 readinput
@@ -79,7 +77,7 @@ while [[ $? -ne 0 ]]; do
 done
 
 # Calculus boy
-echo 'The result is ' $(($NUM1 $OP $NUM2))
+echo 'The result is' $(($NUM1 $OP $NUM2))
 echo ''
 echo 'See you later, sympathetic boy !'
 
