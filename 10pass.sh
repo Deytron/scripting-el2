@@ -1,7 +1,7 @@
 #!/bin/bash
 # 10Pass
 # Made by Romain Ranaivoson
-# Last update: 2023-02-10
+# Last update: 2023-02-17
 # -------------------------------------------
 # To use this script, either run ./start.sh before
 # or run ./10pass.sh with an argument
@@ -9,7 +9,9 @@
 # -------------------------------------------
 
 ### Variables
-TAB=""
+L=0
+CHAR=({a..Z} {A..Z} {0..9} '/' '.' '-' ',')
+NBC=${#CHAR[@]}
 YES=""
 
 echo '  .   *   ..  . *  *
@@ -42,34 +44,51 @@ function input {
     done
 }
 
+function long {
+    while [[ ! $L =~ ^[1-9]+$ ]]; do
+        echo ''
+        echo "Just give me a valid number man"
+        read -p "Give me the password length : " L
+    done
+}
+
+function passwordsnumber {
+    while [[ ! $PN =~ ^[1-9]+$ ]]; do
+        echo ''
+        echo "Just give me a valid number man"
+        read -p "How many passwords do you want to generate ? : " PN
+    done
+}
+
 input
+
+if [[ $YES =~ ^[yYnN]$ ]]; then
+    read -p "Give me the password length : " L
+    long
+fi
+
+if [[ ! $L == 0 ]]; then
+    read -p "How many passwords do you want to generate ? : " PN
+    passwordsnumber
+fi
+
 
 # Function to generate a random password, 10 characters long
 
 function generate_pass {
-    # One obvious thing I could do is using OpenSSL :P
-    # But let's make it the old way
-    for i in {1..10}; do
-        type=$(( $RANDOM % 3 ))
-        if [[ $type == 0 ]]; then
-            i=$(echo $RANDOM | md5sum | head -c 1 )
-            echo
-        fi
-        if [[ $type == 1 ]]; then
-            i=$(( $RANDOM % 9 ))
-        fi
-        if [[ $type == 2 ]]; then
-            i=$(echo "_-+=)({@}" | sed 's/./&\n/g' | grep . | shuf | head -1)
-        fi
-    TAB+=$i
+    for c in $(seq 1 $L); do
+        i=$(( $RANDOM % $NBC ))
+        echo ${CHAR[$i]}
     done
-    echo $TAB
+    echo ''
 }
 
 if [[ $YES == "y" || "Y" ]]; then
-    echo 'Alright. Here is your password :'
+    echo 'Alright. Here are your passwords :'
     echo ''
-    generate_pass
+    for i in $(seq $PN); do
+        generate_pass
+    done
     echo ''
     echo 'Muahaha. I will always be here for you. Come back anytime.'
 else
