@@ -65,7 +65,7 @@ function checkchar {
 function newpass {
     read -p "Enter new password : " PASS
     checkpass
-    SHAPASS=$(echo -n $PASS | sha256sum)
+    SHAPASS=$(echo -n $PASS | sha256sum | awk '{print $1}')
     if [[ $EDITPASS == 1 ]];then
         sed -i "s/$CURRPASS/$SHAPASS/" db.txt
     else
@@ -76,15 +76,15 @@ function newpass {
 
 function checkcurrpass {
     checkpass
-    SHAPASSBIS=$(echo -n $PASS | sha256sum)
-    while [[ "$CURRPASS" != "$SHAPASSBIS" ]]; do
+    SHAPASSBIS=$(echo -n $PASS | sha256sum | awk '{print $1}')
+    while [ "$CURRPASS" != "$SHAPASSBIS" ]; do
         echo $SHAPASSBIS
         echo $CURRPASS
         echo ''
         read -p 'Wrong password. Try again : ' PASS
     done
-    newpass
     EDITPASS=1
+    newpass
 }
 
 function checkpass {
@@ -100,7 +100,7 @@ function checkuserexists {
         echo ''
         echo "Found user $USERNAME. He exists !"
         echo ''
-        CURRPASS=$(grep $USERNAME db.txt | sed 's/^.*: //') 
+        CURRPASS=$(grep $USERNAME db.txt | sed 's/^.*: //' | awk '{print $1}') 
         read -p 'Please confirm the current password : ' PASS
         checkcurrpass
     else
