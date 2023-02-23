@@ -10,19 +10,20 @@
 
 ### Variables
 INPUT='liste.csv'
+FOUND=0
 
 echo 'Gestion utilisateurs'
 echo
 
 ### FONCTIONS
 function import_user() {
-    while IFS=";" read -r c1 c2 c3 c4 c5
+    while IFS=";" read -r c1 c2
     do
         if grep -q "$c1.$c2" passwd;then
          echo "User $c1.$c2 already exists. Skipping..."
     else
         PASSWD=$(echo $RANDOM | md5sum | head -c 20 | mkpasswd -s)
-        USERID=uuidgen
+        USERID=$(echo uuidgen)
         echo "$c1.$c2:$PASSWD:$USERID:100:$c1$c2:/home/$c1.$c2:/bin/bash" >> passwd
         echo "Done creating user $c1 $c2"
     fi
@@ -31,7 +32,22 @@ function import_user() {
 
 
 function search_user() {
-    echo 'éhtyé'
+    read -p "Which user are you searching for ? : " USER
+    while [[ ! $USER =~ [a-zA-Z]+ ]]; do
+        echo
+        read -p 'Invalid user : ' USER
+    done
+    while IFS=";" read -r c1 c2
+    do
+        if grep -q "$USER" passwd;then
+         echo "Users found corresponding to what you typed : "
+         echo "$c1.$c2"
+         FOUND=1
+    fi
+    done < <(tail -n +2 $INPUT)
+     if [[ $FOUND == 0 ]]; then
+        echo 'No user found'
+    fi
 }
 
 function reset_password() {
