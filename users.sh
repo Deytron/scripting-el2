@@ -9,21 +9,26 @@
 # -------------------------------------------
 
 ### Variables
-INPUT=''
-DEFAULT='liste.csv'
+INPUT='liste.csv'
 
 echo 'Gestion utilisateurs'
 echo
 
 ### FONCTIONS
-
-function parsecsv() {
-    echo 'parse'
-}
-
 function import_user() {
-    echo 'éé'
+    while IFS=";" read -r c1 c2 c3 c4 c5
+    do
+        if grep -q "$c1.$c2" passwd;then
+         echo "User $c1.$c2 already exists. Skipping..."
+    else
+        PASSWD=$(echo $RANDOM | md5sum | head -c 20 | mkpasswd -s)
+        USERID=uuidgen
+        echo "$c1.$c2:$PASSWD:$USERID:100:$c1$c2:/home/$c1.$c2:/bin/bash" >> passwd
+        echo "Done creating user $c1 $c2"
+    fi
+    done < <(tail -n +2 $INPUT)
 }
+
 
 function search_user() {
     echo 'éhtyé'
@@ -36,7 +41,7 @@ function reset_password() {
 function usage() {
     echo 'Invalid arguments'
     echo
-    echo "Usage : [--search-user] [--input-user FILE.csv] [--reset-password] [--help]"
+    echo "Usage : [--search-user] [--import-user FILE.csv] [--reset-password] [--help]"
     exit 1
 }
 
@@ -46,18 +51,11 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-# Get args
+# Get args and functions depending on
 for arg in "$@"
 do
-    if [[ $arg == "*.csv" ]]; then
-        INPUT=$arg
-    fi
     case $arg in
-
         --import-user)
-            if [[ $INPUT != '' ]];then
-                INPUT=$DEFAULT
-            fi
             import_user
             ;;
 
@@ -66,14 +64,15 @@ do
             ;;
 
         --reset-password)
-            if [[ $arg != '' ]];then
-                INPUT=$DEFAULT
-            fi
             reset_password
             ;;
+
+        *.csv)
+            INPUT="$arg"
+        ;;
 
         *)
             usage
             ;;
-        esac
+    esac
 done
