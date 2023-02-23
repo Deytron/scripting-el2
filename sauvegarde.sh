@@ -1,5 +1,5 @@
 #!/bin/bash
-# 10Pass
+# Eval sauvegarde
 # Made by Romain Ranaivoson
 # Last update: 2023-02-23
 # -------------------------------------------
@@ -9,7 +9,6 @@
 # -------------------------------------------
 
 ### Variables
-STARTMETHOD=0
 INTER=0
 SRC=''
 DEST=''
